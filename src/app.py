@@ -6,8 +6,10 @@ from pymongo import MongoClient
 import shap
 import os
 
-# Configuración MongoDB (ajusta tu URI de Atlas aquí)
-MONGO_URI = "mongodb+srv://clinica_basededatos:oSasIH5Uq2doFTW0@dbclinico.naipusy.mongodb.net/?appName=DBClinico"
+# Configuración MongoDB usando variable de entorno
+MONGO_URI = os.environ.get("MONGO_URI")
+if not MONGO_URI:
+    raise RuntimeError("La variable de entorno MONGO_URI no está definida. Configúrala en Streamlit Cloud (Secrets) o en tu entorno local.")
 client = MongoClient(MONGO_URI)
 db = client["usuarios_app"]
 usuarios = db["usuarios"]
